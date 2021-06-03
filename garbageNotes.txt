@@ -1,0 +1,37 @@
+
+query
+      // this.$store.user.dispatch("onLogin", {
+      //   email: this.email,
+      //   password: this.password,
+      // });
+      // this.$apollo.mutate({
+      //   mutation: gql`
+      //     mutation {
+      //       signIn(
+      //         credentials: { username: "bankole2000", password: "Password1." }
+      //       ) {
+      //         token
+      //         user {
+      //           username
+      //         }
+      //       }
+      //     }
+      //   `,
+      // });
+
+       // const result = await this.$apollo.mutate({
+      //   mutation: gql`
+      //     mutation signOut {
+      //       signOut {
+      //         user {
+      //           id
+      //         }
+      //       }
+      //     }
+      //   `,
+      // });
+      // console.log({ result });
+      // const {
+      //   data: { user },
+      // } = result;
+      // this.me = user;

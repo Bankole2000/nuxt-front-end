@@ -1,0 +1,21 @@
+mutation signIn($username: String, $password: String, $email: String) {
+  signIn(
+    credentials: { username: $username, password: $password, email: $email }
+  ) {
+    token
+    user {
+      id
+      uuid
+      username
+      email
+      emailIsVerified
+      gender
+      username
+      profile {
+        firstname
+        lastname
+        uuid
+      }
+    }
+  }
+}
