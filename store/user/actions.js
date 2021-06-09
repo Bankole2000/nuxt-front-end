@@ -5,27 +5,27 @@ export default {
   async onLogin({ commit }, payload) {
     const { email, username, password } = payload;
     const client = this.app.apolloProvider.defaultClient;
-    // try {
-    const result = await client.mutate({
-      mutation: loginMutation,
-      variables: {
-        username,
-        email,
-        password
+    try {
+      const result = await client.mutate({
+        mutation: loginMutation,
+        variables: {
+          username,
+          email,
+          password
+        }
+      });
+      console.log(result);
+      const {
+        data: {
+          signIn: { user }
+        }
+      } = result;
+      if (user) {
+        commit("setLoggedInUser", { user });
       }
-    });
-    console.log(result);
-    const {
-      data: {
-        signIn: { user }
-      }
-    } = result;
-    if (user) {
-      commit("setLoggedInUser", { user });
+    } catch (err) {
+      console.log({ err });
     }
-    // } catch (err) {
-    //   console.log({ err });
-    // }
   },
   async onLogout({ commit }) {
     const client = this.app.apolloProvider.defaultClient;

@@ -1,4 +1,6 @@
 export default () => ({
   // Put User State Here
-  user: null
+  user: null,
+  userCurrency: null,
+  userLocation: null
 });

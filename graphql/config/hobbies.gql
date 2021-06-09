@@ -1,0 +1,9 @@
+query($searchText: String) {
+  hobbies(searchText: $searchText) {
+    id
+    uuid
+    title
+    description
+    emoticon
+  }
+}

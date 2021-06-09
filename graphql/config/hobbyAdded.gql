@@ -1,0 +1,9 @@
+subscription hobbyAdded {
+  hobbyAdded {
+    id
+    uuid
+    title
+    description
+    emoticon
+  }
+}

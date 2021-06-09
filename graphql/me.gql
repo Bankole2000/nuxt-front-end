@@ -1,0 +1,35 @@
+query($countryName: String) {
+  me {
+    id
+    uuid
+    username
+    email
+    emailIsVerified
+    gender
+    username
+    profile {
+      firstname
+      lastname
+      uuid
+    }
+  }
+  countryByCode(countryCode: $countryName) {
+    name
+    countryCode
+    capital
+    continent
+    emoji
+    emojiU
+    continentCode
+    currencyCode
+    currency {
+      symbol
+      name
+      pluralName
+      nativeSymbol
+      code
+      decimalDigits
+      rounding
+    }
+  }
+}

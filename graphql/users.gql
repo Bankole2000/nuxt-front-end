@@ -1,0 +1,16 @@
+query {
+  users {
+    username
+    email
+    emailIsVerified
+    createdAt
+    gender
+    lastLogin
+    isOnline
+    profile {
+      firstname
+      lastname
+      profileImageUrl
+    }
+  }
+}

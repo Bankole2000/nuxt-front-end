@@ -1,0 +1,5 @@
+mutation($hobbyID: Int) {
+  deleteHobby(hobbyId: $hobbyID) {
+    id
+  }
+}

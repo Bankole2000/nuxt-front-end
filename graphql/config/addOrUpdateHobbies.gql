@@ -1,0 +1,5 @@
+mutation($hobbyData: HobbyInput) {
+  addOrUpdateHobby(hobby: $hobbyData) {
+    id
+  }
+}
