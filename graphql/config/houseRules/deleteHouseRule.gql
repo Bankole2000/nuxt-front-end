@@ -1,0 +1,5 @@
+mutation deleteHouseRule($houseRuleUUID: String!) {
+  deleteHouseRule(houseRuleUUID: $houseRuleUUID) {
+    id
+  }
+}

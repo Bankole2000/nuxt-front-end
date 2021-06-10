@@ -1,0 +1,13 @@
+query houseRules {
+  houseRules {
+    id
+    uuid
+    title
+    description
+    code
+    faIconTrue
+    faIconFalse
+    mdiIconTrue
+    mdiIconFalse
+  }
+}

@@ -1,0 +1,12 @@
+subscription houseRuleAdded {
+  houseRuleAdded {
+    id
+    title
+    description
+    code
+    faIconTrue
+    faIconFalse
+    mdiIconTrue
+    mdiIconFalse
+  }
+}

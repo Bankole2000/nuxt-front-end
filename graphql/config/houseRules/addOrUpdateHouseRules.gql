@@ -1,0 +1,13 @@
+mutation addOrUpdateHouseRule($houseRuleData: HouseRuleInput) {
+  addOrUpdateHouseRule(houseRuleData: $houseRuleData) {
+    id
+    uuid
+    title
+    description
+    code
+    faIconTrue
+    faIconFalse
+    mdiIconTrue
+    mdiIconFalse
+  }
+}
