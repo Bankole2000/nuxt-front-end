@@ -1,0 +1,13 @@
+subscription amenityAdded {
+  amenityAdded {
+    id
+    uuid
+    title
+    description
+    faIcon
+    mdiIcon
+    category {
+      id
+    }
+  }
+}

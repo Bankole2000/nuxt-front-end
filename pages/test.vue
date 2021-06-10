@@ -1,6 +1,18 @@
 <template>
   <div class="text-page">
-    <HobbiesConfig />
+    <v-container>
+      <v-row>
+        <v-col cols="12" sm="6">
+          <HouseRulesConfig />
+        </v-col>
+        <v-col cols="12" sm="6">
+          <ListingAmenities />
+        </v-col>
+        <v-col cols="12" sm="6">
+          <HobbiesConfig />
+        </v-col>
+      </v-row>
+    </v-container>
     <v-card>
       <v-card-title>
         Users
@@ -62,9 +74,13 @@
 
 <script>
 import HobbiesConfig from "@/components/Config/HobbiesConfig.vue";
+import ListingAmenities from "~/components/Config/Amenities.vue";
+import HouseRulesConfig from "~/components/Config/HouseRulesConfig.vue";
 export default {
   components: {
     HobbiesConfig,
+    ListingAmenities,
+    HouseRulesConfig,
   },
   data() {
     return {

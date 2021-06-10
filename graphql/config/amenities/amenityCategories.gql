@@ -1,0 +1,10 @@
+query amenityCategories {
+  amenityCategories {
+    id
+    uuid
+    title
+    description
+    createdAt
+    updatedAt
+  }
+}

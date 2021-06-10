@@ -1,8 +1,8 @@
 <template>
-  <div class="hobbies-config">
+  <div class="houseRules-config">
     <v-card class="mb-4" tile elevation="8">
       <v-card-title class="primary white--text">
-        Hobbies
+        House Rules
         <v-spacer></v-spacer>
         <v-expand-x-transition>
           <v-card v-show="show" class="transparent" :elevation="0">
@@ -12,8 +12,8 @@
               :sort-by.sync="sortBy"
               :sort-desc.sync="sortDesc"
               prepend-inner-icon="mdi-magnify"
-              placeholder="Search Hobbies"
-              label="Search Hobbies"
+              placeholder="Search House Rules"
+              label="Search House Rules"
               solo
               hide-details
             ></v-text-field>
@@ -35,21 +35,23 @@
         <div v-show="show">
           <v-card-text class="pt-0">
             <v-tabs v-model="tab">
-              <v-tab> Hobbies </v-tab>
-              <v-tab> {{ hobbyData.id ? "Edit" : "Add" }} Hobby </v-tab>
+              <v-tab> House Rules </v-tab>
+              <v-tab>
+                {{ houseRuleData.id ? "Edit" : "Add" }} House Rule
+              </v-tab>
             </v-tabs>
             <v-tabs-items v-model="tab">
-              <!-- Hobbies DataTable -->
+              <!-- HouseRules DataTable -->
               <v-tab-item>
                 <ApolloQuery
-                  :query="require('@/graphql/config/hobbies/hobbies.gql')"
+                  :query="require('@/graphql/config/houseRules/houseRules.gql')"
                   :variables="{ searchText }"
                 >
                   <ApolloSubscribeToMore
                     :document="
-                      require('@/graphql/config/hobbies/hobbyAdded.gql')
+                      require('@/graphql/config/houseRules/houseRuleAdded.gql')
                     "
-                    :update-query="onHobbyAdded"
+                    :update-query="onHouseRuleAdded"
                   />
                   <template slot-scope="{ result: { loading, error, data } }">
                     <!-- Loading -->
@@ -66,7 +68,7 @@
                         :headers="headers"
                         dense
                         :items="
-                          data.hobbies.map((item, i) => {
+                          data.houseRules.map((item, i) => {
                             return { ...item, sno: i + 1 };
                           })
                         "
@@ -112,17 +114,17 @@
                   </template>
                 </ApolloQuery>
               </v-tab-item>
-              <!-- Hobbies Form -->
+              <!-- HouseRules Form -->
               <v-tab-item>
                 <ApolloMutation
                   :mutation="
-                    require('@/graphql/config/hobbies/addOrUpdateHobbies.gql')
+                    require('@/graphql/config/houseRules/addOrUpdateHouseRules.gql')
                   "
                   :variables="{
-                    hobbyData: hobbyData,
+                    houseRuleData: houseRuleData,
                   }"
                   class="form"
-                  @done="savedHobby"
+                  @done="savedHouseRule"
                 >
                   <template slot-scope="{ mutate }">
                     <form v-on:submit.prevent="formValid && mutate()">
@@ -135,12 +137,12 @@
                             rows="6"
                             hide-details
                             prepend-inner-icon="mdi-pencil"
-                            v-model="hobbyData.description"
+                            v-model="houseRuleData.description"
                           ></v-textarea>
                         </v-col>
                         <v-col cols="12" sm="6">
                           <v-text-field
-                            v-model="hobbyData.title"
+                            v-model="houseRuleData.title"
                             class="mb-2"
                             prepend-inner-icon="mdi-pen"
                             outlined
@@ -156,7 +158,7 @@
                             :items="emojis"
                             item-value="char"
                             placeholder="Select an emoticon"
-                            v-model="hobbyData.emoticon"
+                            v-model="houseRuleData.emoticon"
                             flat
                             hide-details
                             item-text="char"
@@ -191,7 +193,7 @@
                               width="45%"
                               color="primary"
                               ><v-icon left>mdi-content-save</v-icon>
-                              {{ hobbyData.id ? "Update" : "Save" }}</v-btn
+                              {{ houseRuleData.id ? "Update" : "Save" }}</v-btn
                             >
                           </div>
                         </v-col>
@@ -211,8 +213,8 @@
 <script>
 import emojis from "../data/emoji.json";
 import { mapActions } from "vuex";
-import HOBBIES_QUERY from "@/graphql/config/hobbies/hobbies.gql";
-import DELETE_QUERY from "@/graphql/config/hobbies/deleteHobby.gql";
+import HOUSERULES_QUERY from "@/graphql/config/houseRules/houseRules.gql";
+import DELETE_QUERY from "@/graphql/config/houseRules/deleteHouseRule.gql";
 
 export default {
   data() {
@@ -235,20 +237,24 @@ export default {
         { text: "Emoji", sortable: false, value: "emoticon" },
         { text: "Actions", value: "actions" },
       ],
-      hobbyData: {
+      houseRuleData: {
         id: "",
         title: "",
         description: "",
-        emoticon: "",
+        code: "",
+        faIconTrue: "",
+        faIconFalse: "",
+        mdiIconTrue: "",
+        mdiIconFalse: "",
       },
     };
   },
   computed: {
     formValid() {
       if (
-        this.hobbyData.title &&
-        this.hobbyData.description &&
-        this.hobbyData.emoticon
+        this.houseRuleData.title &&
+        this.houseRuleData.description &&
+        this.houseRuleData.emoticon
       ) {
         return true;
       }
@@ -268,15 +274,15 @@ export default {
       );
     },
     remove(data, item) {
-      this.hobbyData.emoticon = "";
+      this.houseRuleData.emoticon = "";
       console.log({ data, item });
     },
-    savedHobby() {
-      console.log({ hobbyData: this.hobbyData });
+    savedHouseRule() {
+      console.log({ houseRuleData: this.houseRuleData });
 
       this.showToast({
         show: true,
-        message: `Hobby ${this.hobbyData.id ? "Updated" : "Added"}`,
+        message: `House Rule ${this.houseRuleData.id ? "Updated" : "Added"}`,
         sclass: "success",
       }).then((timeout) => {
         this.clearForm();
@@ -286,34 +292,41 @@ export default {
       });
     },
 
-    onHobbyAdded(previousResult, { subscriptionData }) {
+    onHouseRuleAdded(previousResult, { subscriptionData }) {
       console.log({ previousResult, subscriptionData });
-      const newId = subscriptionData.data.hobbyAdded.id;
-      if (previousResult.hobbies.find((x) => x.id === newId)) {
+      const newId = subscriptionData.data.houseRuleAdded.id;
+      if (previousResult.houseRules.find((x) => x.id === newId)) {
         return {
-          hobbies: previousResult.hobbies.map((obj) => {
-            // return previousResult.hobbies.find((o) => o.id === newId) || obj;
-            return obj.id == newId ? subscriptionData.data.hobbyAdded : obj;
+          houseRules: previousResult.houseRules.map((obj) => {
+            // return previousResult.houseRules.find((o) => o.id === newId) || obj;
+            return obj.id == newId ? subscriptionData.data.houseRuleAdded : obj;
           }),
         };
       }
       return {
-        hobbies: [...previousResult.hobbies, subscriptionData.data.hobbyAdded],
+        houseRules: [
+          ...previousResult.houseRules,
+          subscriptionData.data.houseRuleAdded,
+        ],
       };
     },
     clearForm() {
-      this.hobbyData = {
+      this.houseRuleData = {
         id: "",
         title: "",
         description: "",
-        emoticon: "",
+        code: "",
+        faIconTrue: "",
+        faIconFalse: "",
+        mdiIconTrue: "",
+        mdiIconFalse: "",
       };
       this.tab = 0;
     },
     editItem(item) {
       console.log({ item });
       const { id, title, description, emoticon } = item;
-      this.hobbyData = { id, title, description, emoticon };
+      this.houseRuleData = { id, title, description, emoticon };
       this.tab = 1;
     },
     deleteItem(item) {
@@ -327,21 +340,21 @@ export default {
           store,
           {
             data: {
-              deleteHobby: { id },
+              deleteHouseRule: { id },
             },
           }
         ) => {
           console.log({ id });
           const data = store.readQuery({
-            query: HOBBIES_QUERY,
+            query: HOUSERULES_QUERY,
             variables: {
               searchText: "",
             },
           });
-          data.hobbies = data.hobbies.filter((x) => x.id != id);
+          data.houseRules = data.houseRules.filter((x) => x.id != id);
 
           store.writeQuery({
-            query: HOBBIES_QUERY,
+            query: HOUSERULES_QUERY,
             variables: {
               searchText: "",
             },
@@ -349,7 +362,7 @@ export default {
           });
           this.showToast({
             show: true,
-            message: "Hobby Deleted",
+            message: "House Rule Deleted",
             sclass: "info",
           }).then((timeout) => {
             setTimeout(() => {

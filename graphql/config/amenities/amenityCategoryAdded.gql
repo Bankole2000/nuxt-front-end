@@ -1,0 +1,7 @@
+subscription amenityCategoryAdded {
+  amenityCategoryAdded {
+    id
+    title
+    description
+  }
+}

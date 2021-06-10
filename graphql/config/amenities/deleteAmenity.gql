@@ -1,0 +1,5 @@
+mutation($amenityID: Int) {
+  deleteAmenity(amenityId: $amenityID) {
+    id
+  }
+}

@@ -1,0 +1,13 @@
+mutation addOrUpdateAmenity($amenityData: ListingAmenityInput) {
+  addOrUpdateAmenity(amenityData: $amenityData) {
+    id
+    uuid
+    title
+    description
+    faIcon
+    mdiIcon
+    category {
+      id
+    }
+  }
+}

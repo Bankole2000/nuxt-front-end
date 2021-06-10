@@ -1,0 +1,13 @@
+query amenities($searchText: String) {
+  amenities(searchText: $searchText) {
+    id
+    uuid
+    title
+    description
+    faIcon
+    mdiIcon
+    category {
+      id
+    }
+  }
+}

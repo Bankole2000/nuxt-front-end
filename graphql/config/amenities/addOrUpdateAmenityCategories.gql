@@ -1,0 +1,15 @@
+mutation addOrUpdateAmenityCategory(
+  $categoryData: ListingAmenityCategoryInput
+) {
+  addOrUpdateAmenityCategory(categoryData: $categoryData) {
+    id
+    uuid
+    title
+    description
+    amenities {
+      title
+    }
+    createdAt
+    updatedAt
+  }
+}

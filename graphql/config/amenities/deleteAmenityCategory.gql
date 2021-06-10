@@ -1,0 +1,5 @@
+mutation($categoryId: Int) {
+  deleteAmenityCategory(categoryId: $categoryId) {
+    id
+  }
+}
