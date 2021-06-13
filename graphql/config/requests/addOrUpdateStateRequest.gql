@@ -1,0 +1,11 @@
+mutation addOrUpdateStateRequest($stateData: StateAddRequestInput) {
+  addOrUpdateStateRequest(stateData: $stateData) {
+    id
+    uuid
+    name
+    stateCode
+    countryCode
+    countryName
+    addedToData
+  }
+}

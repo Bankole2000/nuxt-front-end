@@ -1,0 +1,7 @@
+subscription listingAdded {
+  listingAdded {
+    id
+    uuid
+    title
+  }
+}

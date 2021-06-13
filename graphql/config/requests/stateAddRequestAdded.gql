@@ -1,0 +1,13 @@
+subscription stateAddRequestAdded {
+  stateAddRequestAdded {
+    id
+    name
+    uuid
+    stateCode
+    countryCode
+    countryName
+    latitude
+    longitude
+    addedToData
+  }
+}

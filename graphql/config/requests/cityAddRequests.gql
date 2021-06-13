@@ -1,0 +1,14 @@
+query cityAddRequests($searchText: String) {
+  cityAddRequests(searchText: $searchText) {
+    id
+    uuid
+    name
+    stateCode
+    stateName
+    countryCode
+    countryName
+    longitude
+    latitude
+    addedToData
+  }
+}

@@ -1,0 +1,11 @@
+mutation addListing($listingData: ListingInput) {
+  addListing(listing: $listingData) {
+    id
+    uuid
+    title
+    streetAddress
+    baseCurrency {
+      code
+    }
+  }
+}

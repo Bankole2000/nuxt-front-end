@@ -1,0 +1,7 @@
+query listings {
+  listings {
+    id
+    uuid
+    title
+  }
+}

@@ -1,0 +1,11 @@
+query currencies {
+  currencies {
+    symbol
+    code
+    pluralName
+    nativeSymbol
+    decimalDigits
+    rounding
+    name
+  }
+}

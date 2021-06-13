@@ -1,8 +1,8 @@
 <template>
-  <div class="houseRules-config">
+  <div class="listings">
     <v-card class="mb-2" tile elevation="8">
       <v-card-title class="primary white--text">
-        House Rules
+        Listings
         <v-spacer></v-spacer>
         <v-expand-x-transition>
           <v-card v-show="show" class="transparent" :elevation="0">
@@ -12,14 +12,15 @@
               :sort-by.sync="sortBy"
               :sort-desc.sync="sortDesc"
               prepend-inner-icon="mdi-magnify"
-              placeholder="Search House Rules"
-              label="Search House Rules"
+              placeholder="Search Listings"
+              label="Search Listings"
               solo
               hide-details
             ></v-text-field>
           </v-card>
         </v-expand-x-transition>
         <v-spacer></v-spacer>
+        <CreateListingModal />
         <v-btn icon @click="show = !show">
           <v-icon
             :color="show ? 'secondary' : 'white'"
@@ -35,23 +36,18 @@
         <div v-show="show">
           <v-card-text class="pt-0">
             <v-tabs v-model="tab">
-              <v-tab> House Rules </v-tab>
-              <v-tab>
-                {{ houseRuleData.id ? "Edit" : "Add" }} House Rule
-              </v-tab>
+              <v-tab> Listings </v-tab>
             </v-tabs>
             <v-tabs-items v-model="tab">
-              <!-- HouseRules DataTable -->
+              <!-- Listings DataTable -->
               <v-tab-item>
                 <ApolloQuery
-                  :query="require('@/graphql/config/houseRules/houseRules.gql')"
+                  :query="require('@/graphql/listings/listings.gql')"
                   :variables="{ searchText }"
                 >
                   <ApolloSubscribeToMore
-                    :document="
-                      require('@/graphql/config/houseRules/houseRuleAdded.gql')
-                    "
-                    :update-query="onHouseRuleAdded"
+                    :document="require('@/graphql/listings/listingAdded.gql')"
+                    :update-query="onListingAdded"
                   />
                   <template slot-scope="{ result: { loading, error, data } }">
                     <!-- Loading -->
@@ -68,7 +64,7 @@
                         :headers="headers"
                         dense
                         :items="
-                          data.houseRules.map((item, i) => {
+                          data.listings.map((item, i) => {
                             return { ...item, sno: i + 1 };
                           })
                         "
@@ -97,6 +93,45 @@
                                   icon
                                   v-bind="attrs"
                                   v-on="on"
+                                  @click="editItem(item)"
+                                >
+                                  <v-icon small> mdi-eye </v-icon>
+                                </v-btn>
+                              </template>
+                              <span>View Listing Page</span>
+                            </v-tooltip>
+                            <v-tooltip top>
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                  icon
+                                  v-bind="attrs"
+                                  v-on="on"
+                                  @click="editItem(item)"
+                                >
+                                  <v-icon small> mdi-details </v-icon>
+                                </v-btn>
+                              </template>
+                              <span>View Listing Details</span>
+                            </v-tooltip>
+                            <v-tooltip top>
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                  icon
+                                  v-bind="attrs"
+                                  v-on="on"
+                                  @click="editItem(item)"
+                                >
+                                  <v-icon small> mdi-calendar-alert </v-icon>
+                                </v-btn>
+                              </template>
+                              <span>View Bookings</span>
+                            </v-tooltip>
+                            <v-tooltip top>
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                  icon
+                                  v-bind="attrs"
+                                  v-on="on"
                                   @click="deleteItem(item)"
                                 >
                                   <v-icon small> mdi-delete </v-icon>
@@ -114,26 +149,36 @@
                   </template>
                 </ApolloQuery>
               </v-tab-item>
-              <!-- HouseRules Form -->
-              <v-tab-item>
-                <ApolloMutation
+              <!-- Listings Form -->
+
+              <!-- <ApolloMutation
                   :mutation="
-                    require('@/graphql/config/houseRules/addOrUpdateHouseRules.gql')
+                    require('@/graphql/listings/addOrUpdateListings.gql')
                   "
                   :variables="{
-                    houseRuleData: houseRuleData,
+                    listingData: listingData,
                   }"
                   class="form"
-                  @done="savedHouseRule"
+                  @done="savedListing"
                 >
                   <template slot-scope="{ mutate }">
                     <form v-on:submit.prevent="formValid && mutate()">
                       <v-row class="mt-3 pb-4">
                         <v-col cols="12" sm="6">
+                          <v-textarea
+                            placeholder="description"
+                            outlined
+                            label="Description"
+                            rows="6"
+                            hide-details
+                            prepend-inner-icon="mdi-pencil"
+                            v-model="listingData.description"
+                          ></v-textarea>
+                        </v-col>
+                        <v-col cols="12" sm="6">
                           <v-text-field
-                            v-model="houseRuleData.title"
+                            v-model="listingData.title"
                             class="mb-2"
-                            dense
                             prepend-inner-icon="mdi-pen"
                             outlined
                             hide-details
@@ -141,85 +186,33 @@
                             label="Title"
                           >
                           </v-text-field>
-                          <v-textarea
-                            placeholder="description"
-                            outlined
-                            class="mb-2"
-                            label="Description"
-                            rows="1"
-                            hide-details
-                            prepend-inner-icon="mdi-pencil"
-                            v-model="houseRuleData.description"
-                          ></v-textarea>
-
                           <v-autocomplete
-                            prepend-inner-icon="mdi-check"
+                            :filter="customFilter"
+                            prepend-inner-icon="mdi-emoticon-excited"
                             outlined
-                            class="mb-2"
-                            dense
-                            :items="mdiIcons"
-                            placeholder="mdi icon"
-                            v-model="houseRuleData.mdiIconTrue"
-                            flat
-                            :append-icon="`mdi-${houseRuleData.mdiIconTrue}`"
-                            prefix="mdi -"
-                            hide-details
-                            label="Allowed Icon"
-                          >
-                          </v-autocomplete>
-                          <v-autocomplete
-                            prepend-inner-icon="mdi-cancel"
-                            outlined
-                            dense
-                            class="mb-2"
-                            :items="mdiIcons"
-                            placeholder="mdi icon"
-                            v-model="houseRuleData.mdiIconFalse"
-                            :append-icon="`mdi-${houseRuleData.mdiIconFalse}`"
-                            flat
-                            prefix="mdi -"
-                            hide-details
-                            label="Not Allowed Icon"
-                          >
-                          </v-autocomplete>
-                        </v-col>
-                        <v-col cols="12" sm="6">
-                          <v-text-field
-                            v-model="houseRuleData.code"
-                            class="mb-2"
-                            dense
-                            prepend-inner-icon="mdi-xml"
-                            outlined
-                            hide-details
-                            placeholder="e.g. Swimming"
-                            label="Code"
-                          >
-                          </v-text-field>
-
-                          <v-autocomplete
-                            prepend-inner-icon="mdi-font-awesome"
-                            outlined
-                            dense
-                            class="mb-2"
-                            :items="faIcons"
-                            placeholder="font-awesome icon"
-                            v-model="houseRuleData.faIconTrue"
+                            :items="emojis"
+                            item-value="char"
+                            placeholder="Select an emoticon"
+                            v-model="listingData.emoticon"
                             flat
                             hide-details
-                            label="Allowed Icon"
+                            item-text="char"
+                            label="Emoji"
                           >
-                          </v-autocomplete>
-                          <v-autocomplete
-                            prepend-inner-icon="mdi-font-awesome"
-                            outlined
-                            dense
-                            :items="faIcons"
-                            placeholder="font-awesome icon"
-                            v-model="houseRuleData.faIconFalse"
-                            flat
-                            hide-details
-                            label="Not Allowed Icon"
-                          >
+                            <template v-slot:selection="data">
+                              <v-chip
+                                v-bind="data.attrs"
+                                :input-value="data.selected"
+                                close
+                                @click="data.select"
+                                @click:close="remove(data, data.item)"
+                              >
+                                <v-avatar left>
+                                  {{ data.item.char }}
+                                </v-avatar>
+                                {{ data.item.name }}
+                              </v-chip>
+                            </template>
                           </v-autocomplete>
                           <div
                             class="mt-4"
@@ -235,15 +228,14 @@
                               width="45%"
                               color="primary"
                               ><v-icon left>mdi-content-save</v-icon>
-                              {{ houseRuleData.id ? "Update" : "Save" }}</v-btn
+                              {{ listingData.id ? "Update" : "Save" }}</v-btn
                             >
                           </div>
                         </v-col>
                       </v-row>
                     </form>
                   </template>
-                </ApolloMutation>
-              </v-tab-item>
+                </ApolloMutation> -->
             </v-tabs-items>
           </v-card-text>
         </div>
@@ -253,13 +245,14 @@
 </template>
 
 <script>
-import faIcons from "../data/faIcons.json";
-import mdiIcons from "../data/mdiIconNames.json";
+import emojis from "../../data/emoji.json";
 import { mapActions } from "vuex";
-import HOUSERULES_QUERY from "@/graphql/config/houseRules/houseRules.gql";
-import DELETE_QUERY from "@/graphql/config/houseRules/deleteHouseRule.gql";
+import HOBBIES_QUERY from "@/graphql/listings/listings.gql";
+import DELETE_QUERY from "@/graphql/listings/deleteListing.gql";
+import CreateListingModal from "~/components/Modals/CreateListingModal.vue";
 
 export default {
+  components: { CreateListingModal },
   data() {
     return {
       show: true,
@@ -267,8 +260,7 @@ export default {
       sortBy: "title",
       sortDesc: false,
       tab: 0,
-      faIcons,
-      mdiIcons,
+      emojis,
       headers: [
         {
           text: "S/N",
@@ -276,32 +268,48 @@ export default {
           sortable: false,
           value: "sno",
         },
+        { text: "ID", value: "id" },
         { text: "Title", value: "title" },
-        { text: "Description", value: "description" },
-        { text: "Emoji", sortable: false, value: "emoticon" },
+        { text: "UUID", sortable: false, value: "uuid" },
         { text: "Actions", value: "actions" },
       ],
-      houseRuleData: {
+      listingData: {
         id: "",
         title: "",
-        description: "",
-        code: "",
-        faIconTrue: "",
-        faIconFalse: "",
-        mdiIconTrue: "",
-        mdiIconFalse: "",
+        shortDescription: "",
+        longDescription: "",
+        additionalRules: [],
+        baseCurrency: "",
+        basicPrice: 0,
+        pricePerWeekend: 0,
+        pricePerWeek: 0,
+        pricePerMonth: 0,
+        guestCapacity: 0,
+        guestArrivalDaysNotice: 0,
+        guestBookingMonthsInAdvance: 0,
+        bookingStayDaysMin: 0,
+        bookingStayDaysMax: 0,
+        locationCountry: "",
+        locationState: "",
+        locationCity: "",
+        streetAddress: "",
+        listingPurpose: "",
+        listingType: "",
+        latitude: 0,
+        longitude: 0,
+        houseRules: [{ isAllowed: false, ruleId: 0 }],
+        amenities: [],
+        specialFeatures: [],
+        guestPreferences: [],
       },
     };
   },
   computed: {
     formValid() {
       if (
-        this.houseRuleData.title &&
-        this.houseRuleData.description &&
-        this.houseRuleData.mdiIconTrue &&
-        this.houseRuleData.mdiIconFalse &&
-        this.houseRuleData.faIconTrue &&
-        this.houseRuleData.faIconFalse
+        this.listingData.title &&
+        this.listingData.description &&
+        this.listingData.emoticon
       ) {
         return true;
       }
@@ -321,15 +329,15 @@ export default {
       );
     },
     remove(data, item) {
-      this.houseRuleData.emoticon = "";
+      this.listingData.emoticon = "";
       console.log({ data, item });
     },
-    savedHouseRule() {
-      console.log({ houseRuleData: this.houseRuleData });
+    savedListing() {
+      console.log({ listingData: this.listingData });
 
       this.showToast({
         show: true,
-        message: `House Rule ${this.houseRuleData.id ? "Updated" : "Added"}`,
+        message: `Listing ${this.listingData.id ? "Updated" : "Added"}`,
         sclass: "success",
       }).then((timeout) => {
         this.clearForm();
@@ -339,59 +347,37 @@ export default {
       });
     },
 
-    onHouseRuleAdded(previousResult, { subscriptionData }) {
+    onListingAdded(previousResult, { subscriptionData }) {
       console.log({ previousResult, subscriptionData });
-      const newId = subscriptionData.data.houseRuleAdded.id;
-      if (previousResult.houseRules.find((x) => x.id === newId)) {
+      const newId = subscriptionData.data.listingAdded.id;
+      if (previousResult.listings.find((x) => x.id === newId)) {
         return {
-          houseRules: previousResult.houseRules.map((obj) => {
-            // return previousResult.houseRules.find((o) => o.id === newId) || obj;
-            return obj.id == newId ? subscriptionData.data.houseRuleAdded : obj;
+          listings: previousResult.listings.map((obj) => {
+            // return previousResult.listings.find((o) => o.id === newId) || obj;
+            return obj.id == newId ? subscriptionData.data.listingAdded : obj;
           }),
         };
       }
       return {
-        houseRules: [
-          ...previousResult.houseRules,
-          subscriptionData.data.houseRuleAdded,
+        listings: [
+          ...previousResult.listings,
+          subscriptionData.data.listingAdded,
         ],
       };
     },
     clearForm() {
-      this.houseRuleData = {
+      this.listingData = {
         id: "",
         title: "",
         description: "",
-        code: "",
-        faIconTrue: "",
-        faIconFalse: "",
-        mdiIconTrue: "",
-        mdiIconFalse: "",
+        emoticon: "",
       };
       this.tab = 0;
     },
     editItem(item) {
       console.log({ item });
-      const {
-        id,
-        title,
-        description,
-        faIconTrue,
-        faIconFalse,
-        mdiIconTrue,
-        mdiIconFalse,
-        code,
-      } = item;
-      this.houseRuleData = {
-        id,
-        title,
-        description,
-        faIconTrue,
-        faIconFalse,
-        mdiIconTrue,
-        mdiIconFalse,
-        code,
-      };
+      const { id, title, description, emoticon } = item;
+      this.listingData = { id, title, description, emoticon };
       this.tab = 1;
     },
     deleteItem(item) {
@@ -399,27 +385,27 @@ export default {
       this.$apollo.mutate({
         mutation: DELETE_QUERY,
         variables: {
-          houseRuleId: Number(item.id),
+          listingUUID: item.uuid,
         },
         update: (
           store,
           {
             data: {
-              deleteHouseRule: { id },
+              deleteListing: { id },
             },
           }
         ) => {
           console.log({ id });
           const data = store.readQuery({
-            query: HOUSERULES_QUERY,
+            query: HOBBIES_QUERY,
             variables: {
               searchText: "",
             },
           });
-          data.houseRules = data.houseRules.filter((x) => x.id != id);
+          data.listings = data.listings.filter((x) => x.id != id);
 
           store.writeQuery({
-            query: HOUSERULES_QUERY,
+            query: HOBBIES_QUERY,
             variables: {
               searchText: "",
             },
@@ -427,7 +413,7 @@ export default {
           });
           this.showToast({
             show: true,
-            message: "House Rule Deleted",
+            message: "Listing Deleted",
             sclass: "info",
           }).then((timeout) => {
             setTimeout(() => {

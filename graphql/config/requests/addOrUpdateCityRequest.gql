@@ -1,0 +1,12 @@
+mutation addOrUpdateCityRequest($cityData: CityAddRequestInput) {
+  addOrUpdateCityRequest(cityData: $cityData) {
+    id
+    uuid
+    name
+    stateName
+    stateCode
+    countryCode
+    countryName
+    addedToData
+  }
+}

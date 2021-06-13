@@ -1,0 +1,8 @@
+query countryByCode($countryCode: String) {
+  countryByCode(countryCode: $countryCode) {
+    name
+    countryCode
+    emojiU
+    emoji
+  }
+}

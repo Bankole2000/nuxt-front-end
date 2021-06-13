@@ -1,0 +1,10 @@
+query stateByCode($countryCode: String, $stateCode: String) {
+  stateByCode(countryCode: $countryCode, stateCode: $stateCode) {
+    name
+    stateCode
+    countryCode
+    countryName
+    latitude
+    longitude
+  }
+}

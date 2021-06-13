@@ -1,0 +1,5 @@
+mutation deleteListing($listingUUID: String) {
+  deleteListing(listingUUID: $listingUUID) {
+    id
+  }
+}

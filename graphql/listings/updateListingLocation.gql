@@ -1,0 +1,16 @@
+mutation updateListing($listingUUID: String, $updateData: ListingInput) {
+  updateListing(listingUUID: $listingUUID, updateData: $updateData) {
+    locationCity {
+      name
+    }
+    locationState {
+      stateCode
+    }
+    locationCountry {
+      countryCode
+      name
+      emoji
+      emojiU
+    }
+  }
+}

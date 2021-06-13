@@ -1,6 +1,6 @@
 <template>
   <div class="amenities-config">
-    <v-card class="mb-4" tile elevation="8">
+    <v-card class="mb-2" tile elevation="8">
       <v-card-title class="primary white--text">
         Listing Amenities
         <v-spacer></v-spacer>

@@ -1,0 +1,13 @@
+query stateAddRequests($searchText: String) {
+  stateAddRequests(searchText: $searchText) {
+    id
+    uuid
+    name
+    stateCode
+    countryCode
+    countryName
+    latitude
+    longitude
+    addedToData
+  }
+}

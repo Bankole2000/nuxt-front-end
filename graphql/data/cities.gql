@@ -1,0 +1,5 @@
+query citiesByState($countryCode: CountryCode!, $stateCode: String!) {
+  citiesByState(countryCode: $countryCode, stateCode: $stateCode) {
+    name
+  }
+}
