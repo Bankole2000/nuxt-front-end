@@ -9,19 +9,22 @@
       </v-window-item>
       <v-window-item :value="2">
         <Location :listingUUID="listingData.uuid" @next="moveNext" />
-        Guest Details (Guest Capacity, No of Bedrooms, No of
-        Beds)</v-window-item
-      >
+      </v-window-item>
       <v-window-item :value="3">
-        Basic Details (No of Bathrooms, )</v-window-item
-      >
+        <GuestsCap :listingUUID="listingData.uuid" @next="moveNext" />
+      </v-window-item>
       <v-window-item :value="4">
-        Basic Details (Location Data - Country, State, City, Zip Code, Use
-        Current Location?)</v-window-item
+        <Sleeping :listingUUID="listingData.uuid" @next="moveNext" />
+      </v-window-item>
+      <v-window-item :value="5"
+        ><GeoTest :listingUUID="listingData.uuid" @next="moveNext" /> Amenities
+      </v-window-item>
+      <v-window-item :value="6">
+        Details (Amenities & Amenity categories)</v-window-item
       >
-      <v-window-item :value="5"> Amenities Details (Amenities)</v-window-item>
-      <v-window-item :value="6"> Basic Details </v-window-item>
-      <v-window-item :value="7"> Basic Details </v-window-item>
+      <v-window-item :value="7">
+        Details (Amenities & Amenity categories)</v-window-item
+      >
       <v-window-item :value="8"> Basic Details </v-window-item>
       <v-window-item :value="9"> Basic Details </v-window-item>
     </v-window>
@@ -29,14 +32,20 @@
 </template>
 
 <script>
+import GeoTest from "../GeoTest.vue";
 import ListingBasicDetails from "./ListingDetails/BasicDetails.vue";
+import GuestsCap from "./ListingDetails/GuestsCap.vue";
 import Location from "./ListingDetails/Location.vue";
 import PropertyType from "./ListingDetails/PropertyType.vue";
+import Sleeping from "./ListingDetails/Sleeping.vue";
 export default {
   components: {
     ListingBasicDetails,
     PropertyType,
     Location,
+    GuestsCap,
+    Sleeping,
+    GeoTest,
   },
   data() {
     return {

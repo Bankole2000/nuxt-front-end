@@ -61,6 +61,7 @@
                     <!-- Result -->
                     <div v-else-if="data" class="result apollo">
                       <v-data-table
+                        v-if="data.listings"
                         :headers="headers"
                         dense
                         :items="

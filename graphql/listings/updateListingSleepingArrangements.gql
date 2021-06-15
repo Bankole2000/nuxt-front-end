@@ -1,0 +1,9 @@
+mutation updateListing($listingUUID: String, $updateData: ListingInput) {
+  updateListing(listingUUID: $listingUUID, updateData: $updateData) {
+    beds {
+      type
+      quantity
+    }
+    idealForSleeping
+  }
+}

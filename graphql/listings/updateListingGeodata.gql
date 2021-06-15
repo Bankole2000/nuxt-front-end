@@ -1,0 +1,6 @@
+mutation updateListing($listingUUID: String, $updateData: ListingInput) {
+  updateListing(listingUUID: $listingUUID, updateData: $updateData) {
+    longitude
+    latitude
+  }
+}

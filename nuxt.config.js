@@ -32,7 +32,13 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/apollo"],
+  modules: [
+    "@nuxtjs/apollo", // Simple usage
+    "nuxt-leaflet"
+
+    // With options
+    // ['nuxt-leaflet', { /* module options */ }],
+  ],
 
   apollo: {
     clientConfigs: {
