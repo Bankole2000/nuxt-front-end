@@ -3,5 +3,9 @@ subscription amenityCategoryAdded {
     id
     title
     description
+    amenities {
+      id
+      title
+    }
   }
 }

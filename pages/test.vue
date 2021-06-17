@@ -12,11 +12,11 @@
         <v-col cols="12" sm="12">
           <StateAddRequests />
         </v-col>
-        <v-col cols="12" sm="6">
-          <HouseRulesConfig />
-        </v-col>
-        <v-col cols="12" sm="6">
+        <v-col cols="12" sm="12">
           <ListingAmenities />
+        </v-col>
+        <v-col cols="12" sm="12">
+          <HouseRulesConfig />
         </v-col>
         <v-col cols="12" sm="12">
           <HobbiesConfig />

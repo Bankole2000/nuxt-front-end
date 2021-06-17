@@ -68,7 +68,11 @@
                         dense
                         :items="
                           data.amenities.map((item, i) => {
-                            return { ...item, sno: i + 1 };
+                            return {
+                              ...item,
+                              sno: i + 1,
+                              category: item.category.title,
+                            };
                           })
                         "
                         :mobile-breakpoint="0"
@@ -337,7 +341,11 @@
                         dense
                         :items="
                           data.amenityCategories.map((item, i) => {
-                            return { ...item, sno: i + 1 };
+                            return {
+                              ...item,
+                              sno: i + 1,
+                              amenities: item.amenities.length,
+                            };
                           })
                         "
                         :mobile-breakpoint="0"
@@ -419,6 +427,7 @@ export default {
         },
         { text: "Title", value: "title" },
         { text: "Description", value: "description" },
+        { text: "Category", value: "category" },
         { text: "Icon", value: "mdiIcon" },
         { text: "Actions", value: "actions" },
       ],
@@ -431,6 +440,7 @@ export default {
         },
         { text: "Title", value: "title" },
         { text: "Description", value: "description" },
+        { text: "Amenities", value: "amenities" },
         { text: "Actions", value: "actions" },
       ],
       amenityData: {

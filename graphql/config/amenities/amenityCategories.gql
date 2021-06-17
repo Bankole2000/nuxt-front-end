@@ -6,5 +6,11 @@ query amenityCategories {
     description
     createdAt
     updatedAt
+    amenities {
+      id
+      title
+      mdiIcon
+      description
+    }
   }
 }

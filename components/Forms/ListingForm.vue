@@ -20,19 +20,27 @@
         ><GeoTest :listingUUID="listingData.uuid" @next="moveNext" /> Amenities
       </v-window-item>
       <v-window-item :value="6">
-        Details (Amenities & Amenity categories)</v-window-item
-      >
+        <Amenities :listingUUID="listingData.uuid" @next="moveNext" />
+      </v-window-item>
       <v-window-item :value="7">
-        Details (Amenities & Amenity categories)</v-window-item
+        Spaces (Kitchen, Laundry Room, Pool, Elevator, Parking, gym,
+        accessibility features)</v-window-item
       >
-      <v-window-item :value="8"> Basic Details </v-window-item>
-      <v-window-item :value="9"> Basic Details </v-window-item>
+      <v-window-item :value="8"> Pictures </v-window-item>
+      <v-window-item :value="9"> House Rules </v-window-item>
+      <v-window-item :value="10"> Special Features </v-window-item>
+      <v-window-item :value="11"> Pricing </v-window-item>
+      <v-window-item :value="12">
+        Descriptions (guest preferences - ideal for Students, Professionals,
+        Tourists, male/female Elderly, Parents w/ children)
+      </v-window-item>
     </v-window>
   </div>
 </template>
 
 <script>
 import GeoTest from "../GeoTest.vue";
+import Amenities from "./ListingDetails/Amenities.vue";
 import ListingBasicDetails from "./ListingDetails/BasicDetails.vue";
 import GuestsCap from "./ListingDetails/GuestsCap.vue";
 import Location from "./ListingDetails/Location.vue";
@@ -46,6 +54,7 @@ export default {
     GuestsCap,
     Sleeping,
     GeoTest,
+    Amenities,
   },
   data() {
     return {

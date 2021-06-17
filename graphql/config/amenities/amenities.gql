@@ -8,6 +8,7 @@ query amenities($searchText: String) {
     mdiIcon
     category {
       id
+      title
     }
   }
 }

@@ -8,6 +8,7 @@ subscription amenityAdded {
     mdiIcon
     category {
       id
+      title
     }
   }
 }
