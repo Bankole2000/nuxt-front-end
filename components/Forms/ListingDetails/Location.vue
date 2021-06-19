@@ -29,6 +29,7 @@
                       <v-autocomplete
                         clearable
                         outlined
+                        autofocus
                         type="text"
                         autocomplete="offoff"
                         v-model="listingData.locationCountry"

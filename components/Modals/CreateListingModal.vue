@@ -48,22 +48,27 @@
             style="
               height: 100%;
               width: 100%;
+              flex: 4;
+
               display: flex;
               flex-direction: column;
               align-items: center;
               justify-content: center;
             "
           >
-            <v-container>
+            <v-container fluid>
               <v-row>
-                <v-col cols="10" offset="1">
+                <v-col
+                  :cols="$vuetify.breakpoint.smAndDown ? '12' : '10'"
+                  :offset="$vuetify.breakpoint.smAndDown ? '0' : '1'"
+                >
                   <Listing-form />
                 </v-col>
               </v-row>
             </v-container>
           </div>
           <div
-            style="background-color: red; height: 100%; width: 100%"
+            style="background-color: red; height: 100%; width: 100%; flex: 3"
             v-if="$vuetify.breakpoint.mdAndUp"
           ></div>
         </v-card-text>

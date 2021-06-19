@@ -15,7 +15,7 @@ const purposes = [
   },
   {
     text: "Events",
-    value: "EVENT",
+    value: "EVENTS",
     description:
       "The Place is designed to host <strong>Events</strong>, <strong>Meetings</strong>, and/or <strong>medium to large Gatherings</strong>. <br /> E.g. Event Center, Multi-purpose Hall, Open Bar, Garden, Club",
     icon: "mdi-calendar-check"
@@ -280,7 +280,7 @@ const COMMERCIAL = [
   }
 ];
 
-const EVENT = [
+const EVENTS = [
   {
     text: "Event Center",
     value: "Event Center",
@@ -314,8 +314,8 @@ const EVENT = [
 const kinds = {
   RESIDENTIAL,
   COMMERCIAL,
-  EVENT,
-  ANY: [...RESIDENTIAL, ...COMMERCIAL, ...EVENT]
+  EVENTS,
+  ANY: [...RESIDENTIAL, ...COMMERCIAL, ...EVENTS]
 };
 
 const types = [

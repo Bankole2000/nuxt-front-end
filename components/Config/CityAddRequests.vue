@@ -438,7 +438,7 @@ export default {
       selectedState: null,
       rules: {
         required: (value) => !!value || "Required.",
-        max: (v) => v?.length <= 2 || "2 characters only",
+        max: (v) => v?.length <= 5 || "up to 5 characters only",
       },
     };
   },

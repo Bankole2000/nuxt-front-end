@@ -1,5 +1,5 @@
-query listings {
-  listings {
+query listings($searchText: String) {
+  listings(title: $searchText) {
     id
     uuid
     title

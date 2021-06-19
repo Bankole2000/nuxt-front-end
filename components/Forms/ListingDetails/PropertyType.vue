@@ -17,6 +17,7 @@
               <v-col cols="12">
                 <v-select
                   outlined
+                  autofocus
                   v-model="listingData.listingPurpose"
                   :items="purposes"
                   item-text="text"

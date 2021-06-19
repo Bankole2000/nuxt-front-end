@@ -1,0 +1,17 @@
+mutation updateListing($listingUUID: String, $updateData: ListingInput) {
+  updateListing(listingUUID: $listingUUID, updateData: $updateData) {
+    id
+    uuid
+    title
+    shortDescription
+    longDescription
+    houseRules {
+      isAllowed
+      rule {
+        title
+        description
+        code
+      }
+    }
+  }
+}

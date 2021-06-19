@@ -15,6 +15,7 @@
               <form v-on:submit.prevent="formIsValid && mutate()">
                 <v-text-field
                   outlined
+                  autofocus
                   label="Listing Title"
                   v-model="listingData.title"
                   placeholder="E.g. Jay's Place, Kiki's Room, or Spacious 1 Bedroom Apt in Abuja"

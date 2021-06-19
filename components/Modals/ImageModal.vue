@@ -1,14 +1,20 @@
 <template>
   <div class="image-select-modal">
-    <v-dialog persistent v-model="dialog" width="500">
+    <v-dialog
+      :fullscreen="$vuetify.breakpoint.smAndDown"
+      :scrollable="$vuetify.breakpoint.smAndDown"
+      persistent
+      v-model="dialog"
+      width="500"
+    >
       <template v-slot:activator="{ on, attrs }">
         <v-card
           class="rounded-lg"
-          width="355"
-          height="250"
+          :width="$vuetify.breakpoint.smAndDown ? '185' : '355'"
+          :height="$vuetify.breakpoint.smAndDown ? '130' : '250'"
           v-bind="attrs"
           :img="uploadedImage ? uploadedImage.image.fileURL : null"
-          v-on="on"
+          v-on="uploadedImage ? '' : on"
           :style="{
             border: uploadedImage ? 'none' : '4px dashed grey',
           }"
@@ -25,7 +31,9 @@
             "
           >
             <v-icon size="48">mdi-camera</v-icon>
-            <p class="display-1">Select An Image</p>
+            <p :class="$vuetify.breakpoint.smAndDown ? 'title' : 'display-1'">
+              Select An Image
+            </p>
           </div>
           <div
             v-if="uploadedImage"
@@ -249,6 +257,7 @@ export default {
           this.dialog = false;
           this.uploadingImage = false;
           this.uploadedImage = data.addListingImage;
+          this.$emit("addImage", { image: data.addListingImage });
           this.showToast({
             show: true,
             message: "Listing Image Uploaded",

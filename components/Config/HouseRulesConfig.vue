@@ -105,8 +105,14 @@
                               <span>Delete</span>
                             </v-tooltip>
                           </div>
-                        </template></v-data-table
-                      >
+                        </template>
+                        <template v-slot:[`item.mdiIconTrue`]="{ item }">
+                          <v-icon>mdi-{{ item.mdiIconTrue }}</v-icon>
+                        </template>
+                        <template v-slot:[`item.mdiIconFalse`]="{ item }">
+                          <v-icon>mdi-{{ item.mdiIconFalse }}</v-icon>
+                        </template>
+                      </v-data-table>
                     </div>
 
                     <!-- No result -->
@@ -278,7 +284,8 @@ export default {
         },
         { text: "Title", value: "title" },
         { text: "Description", value: "description" },
-        { text: "Emoji", sortable: false, value: "emoticon" },
+        { text: "Allowed icon", sortable: false, value: "mdiIconTrue" },
+        { text: "Icon not allowed", sortable: false, value: "mdiIconFalse" },
         { text: "Actions", value: "actions" },
       ],
       houseRuleData: {
