@@ -23,10 +23,11 @@
         <Amenities :listingUUID="listingData.uuid" @next="moveNext" />
       </v-window-item>
       <v-window-item :value="7">
-        Spaces (Kitchen, Laundry Room, Pool, Elevator, Parking, gym,
-        accessibility features)</v-window-item
-      >
-      <v-window-item :value="8"> Pictures </v-window-item>
+        <Spaces :listingUUID="listingData.uuid" @next="moveNext"
+      /></v-window-item>
+      <v-window-item :value="8">
+        <ImageModal :listingUUID="listingData.uuid" /> <ImageTest /> Pictures
+      </v-window-item>
       <v-window-item :value="9"> House Rules </v-window-item>
       <v-window-item :value="10"> Special Features </v-window-item>
       <v-window-item :value="11"> Pricing </v-window-item>
@@ -40,12 +41,15 @@
 
 <script>
 import GeoTest from "../GeoTest.vue";
+import ImageTest from "../ImageTest.vue";
+import ImageModal from "../Modals/ImageModal.vue";
 import Amenities from "./ListingDetails/Amenities.vue";
 import ListingBasicDetails from "./ListingDetails/BasicDetails.vue";
 import GuestsCap from "./ListingDetails/GuestsCap.vue";
 import Location from "./ListingDetails/Location.vue";
 import PropertyType from "./ListingDetails/PropertyType.vue";
 import Sleeping from "./ListingDetails/Sleeping.vue";
+import Spaces from "./ListingDetails/Spaces.vue";
 export default {
   components: {
     ListingBasicDetails,
@@ -55,6 +59,9 @@ export default {
     Sleeping,
     GeoTest,
     Amenities,
+    Spaces,
+    ImageTest,
+    ImageModal,
   },
   data() {
     return {

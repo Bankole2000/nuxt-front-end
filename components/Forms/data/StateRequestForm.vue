@@ -221,7 +221,7 @@ export default {
       if (
         this.stateData.name &&
         this.stateData.stateCode &&
-        this.stateData.stateCode.length <= 2 &&
+        this.stateData.stateCode.length <= 5 &&
         this.stateData.countryCode &&
         this.stateData.countryName
       ) {

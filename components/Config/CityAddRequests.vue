@@ -447,7 +447,7 @@ export default {
       if (
         this.cityData.name &&
         this.cityData.stateCode &&
-        this.cityData.stateCode.length <= 2 &&
+        this.cityData.stateCode.length <= 5 &&
         this.cityData.stateName &&
         this.cityData.countryCode &&
         this.cityData.countryName

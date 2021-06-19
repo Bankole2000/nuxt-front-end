@@ -1,0 +1,30 @@
+mutation addListingImage(
+  $file: Upload!
+  $listingUUID: String!
+  $title: String
+  $description: String
+) {
+  addListingImage(
+    file: $file
+    listingUUID: $listingUUID
+    title: $title
+    description: $description
+  ) {
+    title
+    description
+    index
+    image {
+      id
+      uuid
+      filename
+      filePath
+      fileURL
+      thumbnailPath
+      thumbnailURL
+      mediumPath
+      mediumURL
+      largePath
+      largeURL
+    }
+  }
+}
