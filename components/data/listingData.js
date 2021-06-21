@@ -342,4 +342,65 @@ const types = [
   }
 ];
 
-module.exports = { types, purposes, kinds, subgroups };
+const guestsShouldKnow = [
+  {
+    title: "Must climb stairs",
+    info: "Describe the stairs (for example, how many flights)",
+    description: "",
+    id: 1
+  },
+  {
+    title: "Potential for noise",
+    info: "Describe the noise and when it's likely to take place",
+    description: "",
+    id: 2
+  },
+  {
+    title: "Pet(s) live on property",
+    info: "Describe the pets you may have",
+    description: "",
+    id: 3
+  },
+  {
+    title: "No parking on property",
+    info: "Describe the parking situation around the listing",
+    description: "",
+    id: 4
+  },
+  {
+    title: "Some spaces are shared",
+    info: "Describe the spaces guests will share",
+    description: "",
+    id: 5
+  },
+  {
+    title: "Amenity Limitations",
+    info:
+      "Describe the amenities or service that are limited, such as weak wifi or limited power supply",
+    description: "",
+    id: 6
+  },
+  {
+    title: "Surveillance or recording devices on property",
+    info:
+      "Describe any device that records or sends video, audio, or still images. Specify each device’s location and whether it will be on or off.",
+    description: "",
+    id: 7
+  },
+  {
+    title: "Weapons on property",
+    info:
+      "Describe any weapons (firearms, airguns, tasers, etc.), their location, and how they’re secured",
+    description: "",
+    id: 8
+  },
+  {
+    title: "Dangerous animals on property",
+    info:
+      "Describe any domesticated or wild animals that could be a health or safety risk to guests or other animals ",
+    description: "",
+    id: 9
+  }
+];
+
+module.exports = { types, purposes, kinds, subgroups, guestsShouldKnow };

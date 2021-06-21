@@ -13,5 +13,12 @@ mutation updateListing($listingUUID: String, $updateData: ListingInput) {
         code
       }
     }
+    additionalRules
+    guestsShouldKnow {
+      title
+      info
+      description
+      id
+    }
   }
 }

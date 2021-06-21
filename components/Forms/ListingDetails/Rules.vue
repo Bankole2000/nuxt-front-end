@@ -173,7 +173,9 @@ export default {
             });
           },
         });
+        return;
       }
+      this.$emit("next", { listingData: this.listingData });
     },
   },
 };
